@@ -2,7 +2,7 @@ local internet = require("internet")
 local os = require("os")
 
 function main()
-  fetchTimeout = 10 -- seconds
+  fetchTimeoutInSeconds = 10
   -- while true do
     postData(transformJson(getStats()))
     -- doActions(getActions())
