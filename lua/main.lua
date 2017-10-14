@@ -1,11 +1,14 @@
 local internet = require("internet")
 local os = require("os")
 
+-- configs
+local sleepInSeconds = 5
+
 function main() 
   while true do
     postData(transformData(getStats()))
     -- doActions(getActions())
-    os.sleep(5)
+    os.sleep(sleepInSeconds)
   end
 
 end
