@@ -16,7 +16,7 @@ function postData(data)
   password = "avexis"
   key = "vjeum9alawHPXq6UY5TPlfMEhAyuiFwygKi7LWbt"
 
-  internet.request(url .. "?" .. key, data)
+  internet.request(url .. "?" .. key, data, ["Authorization", "Basic " .. username .. ":" .. password])
   responseCode, response, headers = internet.response()
   internet.close()
 end
