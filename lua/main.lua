@@ -1,12 +1,13 @@
 local internet = require("internet")
 local os = require("os")
 
-function main() 
-  while true do
-    postData(transformData(getStats()))
+function main()
+  fetchTimeout = 10 -- seconds
+  -- while true do
+    postData(transformJson(getStats()))
     -- doActions(getActions())
-    os.sleep(5)
-  end
+  --   os.sleep(fetchTimeout)
+  -- end
 
 end
 
@@ -16,9 +17,14 @@ function postData(data)
   password = "avexis"
   key = "vjeum9alawHPXq6UY5TPlfMEhAyuiFwygKi7LWbt"
 
-  internet.request(url .. "?" .. key, data, {"Authorization", "Basic " .. username .. ":" .. password})
-  responseCode, response, headers = internet.response()
-  internet.close()
+  responseCode, response, headers = internet
+    .request(url .. "?" .. key, data, {"Authorization", "Basic " .. username .. ":" .. password})
+    .response()
+
+  print(responseCode)
+  print(response)
+  -- responseCode, response, headers = internet.response()
+  -- internet.close()
 end
 
 function getStats()
@@ -33,13 +39,20 @@ function checkPowerStats()
   stored = 1000
   maxStorage = 10000
   
-  return "{\"producing\": " .. producing ..", \"stored\": " .. stored .. ", \"maxStorage\": ".. maxStorage .."}"
+  json = "{\"producing\": " .. producing ..", \"stored\": " .. stored .. ", \"maxStorage\": ".. maxStorage .."}"
+
+  return json
 end
 
 function checkResourceStats()
-  return ""
+  json = "\"\""
+  return json
 end
 
-function transformData(power, resources)
-  return "{\"power\":" .. power .. ", \"resources\": ".. resources .."}"
+function transformJson(power, resources)
+  json = "{\"power\":" .. power .. ", \"resources\": ".. resources .."}"
+  print("Json: " .. json)
+  return json
 end
+
+main()
