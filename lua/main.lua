@@ -15,16 +15,25 @@ function postData(data)
   url = "https://avexis-opencomputers.firebaseio.com/stats.json"
   username = "sindre.boyum@gmail.com"
   password = "avexis"
-  key = "vjeum9alawHPXq6UY5TPlfMEhAyuiFwygKi7LWbt"
+  encodedAuth = "c2luZHJlLmJveXVtQGdtYWlsLmNvbTphdmV4aXM="
+  dbSecret = "vjeum9alawHPXq6UY5TPlfMEhAyuiFwygKi7LWbt"
 
-  responseCode, response, headers = internet
-    .request(url .. "?" .. key, data, {"Authorization", "Basic " .. username .. ":" .. password})
-    .response()
+  response = internet.request(
+    url .. "?auth=" .. dbSecret, 
+    data, 
+    {
+      "Authorization", "Basic " .. encodedAuth, 
+      "Content-Type", "application/json", 
+      "X-HTTP-Method-Override", "PUT"
+    }
+  )
 
-  print(responseCode)
-  print(response)
-  -- responseCode, response, headers = internet.response()
-  -- internet.close()
+  responseText = ""
+  for line in response do 
+    responseText = responseText .. line .. "\n"
+  end
+
+  print(responseText)
 end
 
 function getStats()
@@ -51,7 +60,6 @@ end
 
 function transformJson(power, resources)
   json = "{\"power\":" .. power .. ", \"resources\": ".. resources .."}"
-  print("Json: " .. json)
   return json
 end
 
