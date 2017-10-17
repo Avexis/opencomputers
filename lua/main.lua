@@ -19,12 +19,11 @@ function postData(data)
   dbSecret = "vjeum9alawHPXq6UY5TPlfMEhAyuiFwygKi7LWbt"
 
   response = internet.request(
-    url .. "?auth=" .. dbSecret, 
+    url .. "?auth=" .. dbSecret .. "&x-http-method-override=PUT", 
     data, 
     {
       "Authorization", "Basic " .. encodedAuth, 
-      "Content-Type", "application/json", 
-      "X-HTTP-Method-Override", "PUT"
+      "Content-Type", "application/json"
     }
   )
 
